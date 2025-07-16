@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnifiMessenger</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Title Bar (for custom title bar on macOS) -->
+        <div id="title-bar" class="title-bar">
+            <div class="title-bar-buttons">
+                <button id="minimize-btn" class="title-bar-button">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button id="maximize-btn" class="title-bar-button">
+                    <i class="fas fa-square"></i>
+                </button>
+                <button id="close-btn" class="title-bar-button">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="title-bar-title">UnifiMessenger</div>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Platform Status -->
+                <div class="platform-status">
+                    <h3>Platforms</h3>
+                    <div class="platform-list" id="platform-list">
+                        <!-- Platform items will be dynamically added here -->
+                    </div>
+                    <button class="btn btn-primary" id="add-platform-btn">
+                        <i class="fas fa-plus"></i> Add Platform
+                    </button>
+                </div>
+
+                <!-- Channels -->
+                <div class="channels">
+                    <h3>Channels</h3>
+                    <div class="channel-list" id="channel-list">
+                        <!-- Channel items will be dynamically added here -->
+                    </div>
+                </div>
+
+                <!-- AI Status -->
+                <div class="ai-status">
+                    <div class="ai-toggle">
+                        <label class="switch">
+                            <input type="checkbox" id="ai-enabled">
+                            <span class="slider"></span>
+                        </label>
+                        <span>AI Assistant</span>
+                    </div>
+                    <div class="ai-mode" id="ai-mode" style="display: none;">
+                        <select id="ai-mode-select">
+                            <option value="chat">Chat Mode</option>
+                            <option value="cross-channel">Cross-Channel</option>
+                            <option value="translate">Translate</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Header -->
+                <div class="header">
+                    <div class="current-channel">
+                        <h2 id="current-channel-name">Select a channel</h2>
+                        <span id="current-channel-info"></span>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-icon" id="search-btn" title="Search">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button class="btn btn-icon" id="voice-record-btn" title="Record Voice">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <button class="btn btn-icon" id="settings-btn" title="Settings">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages -->
+                <div class="messages-container">
+                    <div class="messages" id="messages">
+                        <!-- Welcome message -->
+                        <div class="welcome-message">
+                            <h3>Welcome to UnifiMessenger!</h3>
+                            <p>Connect your platforms to start messaging across all your accounts.</p>
+                            <button class="btn btn-primary" id="get-started-btn">Get Started</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message Input -->
+                <div class="message-input-container">
+                    <div class="message-input">
+                        <div class="input-actions">
+                            <button class="btn btn-icon" id="attach-file-btn" title="Attach File">
+                                <i class="fas fa-paperclip"></i>
+                            </button>
+                            <button class="btn btn-icon" id="emoji-btn" title="Emoji">
+                                <i class="fas fa-smile"></i>
+                            </button>
+                        </div>
+                        <textarea id="message-textarea" placeholder="Type a message..." rows="1"></textarea>
+                        <div class="send-actions">
+                            <button class="btn btn-icon" id="voice-message-btn" title="Voice Message">
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                            <button class="btn btn-icon btn-primary" id="send-btn" title="Send">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="typing-indicator" id="typing-indicator" style="display: none;">
+                        <span>AI is typing...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modals -->
+        <div id="modal-overlay" class="modal-overlay" style="display: none;">
+            <!-- Platform Connection Modal -->
+            <div id="platform-modal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Connect Platform</h3>
+                        <button class="modal-close" id="platform-modal-close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="platform-tabs">
+                            <button class="tab-btn active" data-platform="telegram">Telegram</button>
+                            <button class="tab-btn" data-platform="slack">Slack</button>
+                            <button class="tab-btn" data-platform="discord">Discord</button>
+                            <button class="tab-btn" data-platform="email">Email</button>
+                        </div>
+                        <div class="platform-config" id="platform-config">
+                            <!-- Configuration forms will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" id="platform-cancel-btn">Cancel</button>
+                        <button class="btn btn-primary" id="platform-connect-btn">Connect</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Modal -->
+            <div id="settings-modal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Settings</h3>
+                        <button class="modal-close" id="settings-modal-close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="settings-tabs">
+                            <button class="tab-btn active" data-tab="general">General</button>
+                            <button class="tab-btn" data-tab="ai">AI Settings</button>
+                            <button class="tab-btn" data-tab="audio">Audio</button>
+                            <button class="tab-btn" data-tab="notifications">Notifications</button>
+                        </div>
+                        <div class="settings-content" id="settings-content">
+                            <!-- Settings content will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" id="settings-cancel-btn">Cancel</button>
+                        <button class="btn btn-primary" id="settings-save-btn">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Modal -->
+            <div id="search-modal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Search Messages</h3>
+                        <button class="modal-close" id="search-modal-close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="search-input">
+                            <input type="text" id="search-query" placeholder="Search messages...">
+                            <button class="btn btn-primary" id="search-execute-btn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="search-filters">
+                            <select id="search-platform">
+                                <option value="">All Platforms</option>
+                            </select>
+                            <select id="search-channel">
+                                <option value="">All Channels</option>
+                            </select>
+                            <input type="date" id="search-date">
+                        </div>
+                        <div class="search-results" id="search-results">
+                            <!-- Search results will be displayed here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toast-container" class="toast-container">
+            <!-- Toast notifications will be added here dynamically -->
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="loading-overlay" style="display: none;">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Processing...</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/platforms.js"></script>
+    <script src="js/messages.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>

@@ -271,3 +271,6 @@ docker-compose*
 coverage/
 .coverage
 htmlcov/
+# Claude local files
+CLAUDE.local.md
+.claude/local/

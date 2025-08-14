@@ -106,7 +106,7 @@
     "webpack-cli": "^5.1.4",
     "html-webpack-plugin": "^5.6.0",
     "css-loader": "^6.9.1",
-    "style-loader": "^3.3.4"
+    "style-loader": "^4.0.0"
   },
   "build": {
     "appId": "com.unifimessenger.app",

@@ -80,7 +80,7 @@
     "puppeteer": "^21.9.0",
     "node-telegram-bot-api": "^0.66.0",
     "elevenlabs": "^0.7.0",
-    "electron": "^28.2.0",
+    "electron": "^37.2.6",
     "electron-builder": "^24.9.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

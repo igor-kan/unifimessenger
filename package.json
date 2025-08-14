@@ -51,7 +51,7 @@
   "license": "MIT",
   "dependencies": {
     "commander": "^12.0.0",
-    "express": "^4.18.2",
+    "express": "^5.1.0",
     "socket.io": "^4.7.5",
     "ws": "^8.16.0",
     "telegraf": "^4.15.6",

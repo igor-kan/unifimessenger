@@ -83,7 +83,7 @@
     "electron": "^28.2.0",
     "electron-builder": "^24.9.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "^19.1.1",
     "react-router-dom": "^6.21.1",
     "styled-components": "^6.1.6",
     "electron-store": "^8.1.0"
